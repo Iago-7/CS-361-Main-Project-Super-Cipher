@@ -54,7 +54,8 @@ def main_menu():
         elif user_choice == 2:
             print(f"{user_name}, {WHAT_IS_A_CIPHER_TEXT}")
         elif user_choice == 3:
-            txt_to_encrypt = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted.\n")
+            txt_to_encrypt = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. WARNING:"
+                                   f" once you hit enter, you will not be able to able to change your text.\n")
             return txt_to_encrypt
         elif user_choice == 4:
             return False
