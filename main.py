@@ -40,4 +40,4 @@ elif user_choice == 3:
 elif user_choice == 4:
     pass  # load Date-shift Cipher
 elif user_choice == 5:
-    print(f"Thanks for stopping by {name}! We'll see you next time!")
+    print(f"Thanks for stopping by {user_name}! We'll see you next time!")
