@@ -17,18 +17,18 @@ encrypt_string = input("Please enter a string to be encrypted. Non-alphabet char
 key_string = input("Please enter a word to use as a key. Letters only.\n")
 key_string = key_string.lower()
 
-for letter in encrypt_string:
-    if letter.islower():
-        current_letter_pos = letter_string_lower.rfind(letter)
+for char in encrypt_string:
+    if char.islower():
+        current_letter_pos = letter_string_lower.rfind(char)
         shift_amount = (letter_string_lower.rfind(key_string[key_string_pos]) + current_letter_pos)
         key_string_pos = (key_string_pos + 1) % len(key_string)
         final_string += letter_string_lower[shift_amount % 26]
-    elif letter.isupper():
-        current_letter_pos = letter_string_upper.rfind(letter)
+    elif char.isupper():
+        current_letter_pos = letter_string_upper.rfind(char)
         shift_amount = (letter_string_lower.rfind(key_string[key_string_pos]) + current_letter_pos)
         key_string_pos = (key_string_pos + 1) % len(key_string)
         final_string += letter_string_upper[shift_amount % 26]
     else:
-        final_string += letter
+        final_string += char
 
 print(final_string)

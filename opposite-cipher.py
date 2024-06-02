@@ -11,17 +11,17 @@ final_string = ""
 
 encrypt_string = input("Please enter a string to be encrypted. Non-alphanumeric characters will remain the same.\n")
 
-for letter in encrypt_string:
-    if letter.islower():
-        pos = letter_string_lower.rfind(letter)
+for char in encrypt_string:
+    if char.islower():
+        pos = letter_string_lower.rfind(char)
         final_string += letter_string_lower[(pos + 13) % 26]
-    elif letter.isupper():
-        pos = letter_string_upper.rfind(letter)
+    elif char.isupper():
+        pos = letter_string_upper.rfind(char)
         final_string += letter_string_upper[(pos + 13) % 26]
-    elif letter.isdigit():
-        pos = numbers_string.rfind(letter)
+    elif char.isdigit():
+        pos = numbers_string.rfind(char)
         final_string += numbers_string[(pos + 5) % 10]
     else:
-        final_string += letter
+        final_string += char
 
 print(final_string)
