@@ -66,14 +66,14 @@ def encryption_menu():
     while True:
         cipher_choice = int(input(f"{user_name}, please choose from the following options:\n"
                                   f"0 - Caesar cipher\n"
-                                  f"1 - Mirror cipher\n"
+                                  f"1 - Opposite cipher\n"
                                   f"2 - Vigenère cipher\n"
                                   f"3 - Date-shift cipher\n"))
         if cipher_choice == 0:
             # TODO: encrypt text with Caesar cipher.
             return "Encrypted Text"
         if cipher_choice == 1:
-            # TODO: encrypt text with Mirror cipher.
+            # TODO: encrypt text with Opposite cipher.
             return "Encrypted Text"
         if cipher_choice == 2:
             # TODO: encrypt text with Vigenère cipher.
