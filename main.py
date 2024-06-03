@@ -93,8 +93,8 @@ def encryption_menu():
             encrypt_string = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. "
                                    f"Non-letter characters will will remain the same. WARNING:"
                                    f" once you hit enter, you will not be able to change your text.\n")
-            date_input = input("Please enter a date in the form MM/DD/YYYY. WARNING: once you hit enter, you will not be"
-                               " able to change your text.\n")
+            date_input = input("Please enter a date in the form MM/DD/YYYY. WARNING: once you hit enter, you will not "
+                               "be able to change your text.\n")
             cipher_data = {"string_to_encrypt": encrypt_string,
                            "encrypt_key": date_input}
             json_data = json.dumps(cipher_data)
