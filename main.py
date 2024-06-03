@@ -26,6 +26,7 @@ NICKNAME_LIST = ["Knuckle", "Scapula", "Tibia", "Femur", "Radius", "Ulna", "Skul
 
 
 def get_user_name():
+    name = ""
     is_user_name_unconfirmed = True
     while is_user_name_unconfirmed:
         # TODO: ADD ERROR CHECKING FOR ENTRY
@@ -86,8 +87,20 @@ def encryption_menu():
             opposite_encrypted_text = json_response["encrypted_string"]
             return opposite_encrypted_text
         if cipher_choice == 2:
-            # TODO: encrypt text with Vigenère cipher.
-            return "Encrypted Text"
+            vigenere_url = "http://127.0.0.1:5002"
+            encrypt_string = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. "
+                                   f"Non-letter characters will will remain the same. WARNING:"
+                                   f" once you hit enter, you will not be able to change your text.\n")
+            key_input = input("Please enter a word to use as a key. Letters only. WARNING: once you hit enter, you will"
+                              " not be able to change your text.\n")
+            cipher_data = {"string_to_encrypt": encrypt_string,
+                           "encrypt_key": key_input}
+            json_data = json.dumps(cipher_data)
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(vigenere_url, data=json_data, headers=headers)
+            json_response = response.json()
+            vigenere_encrypted_text = json_response["encrypted_string"]
+            return vigenere_encrypted_text
         if cipher_choice == 3:
             date_shift_url = "http://127.0.0.1:5001"
             encrypt_string = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. "

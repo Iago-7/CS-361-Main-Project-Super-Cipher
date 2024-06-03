@@ -30,7 +30,7 @@ def date_shift_cipher():
         encrypt_string = data["string_to_encrypt"]
         date_input = data["encrypt_key"]
     except (ValueError, TypeError):
-        return jsonify({"error": "incorrect data type for time_in_minutes, please try again."}), 400
+        return jsonify({"error": "incorrect data type for encrypt_string or key_string, please try again."}), 400
 
     letter_string_lower = "abcdefghijklmnopqrstuvwxyz"
     letter_string_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
