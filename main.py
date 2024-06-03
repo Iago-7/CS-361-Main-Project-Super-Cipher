@@ -74,7 +74,6 @@ def encryption_menu():
             # TODO: encrypt text with Caesar cipher.
             return "Encrypted Text"
         if cipher_choice == 1:
-            # TODO: encrypt text with Opposite cipher.
             opposite_url = "http://127.0.0.1:5000"
             encrypt_string = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. "
                                    f"Non-alphanumeric characters will remain the same. WARNING:"
@@ -90,8 +89,20 @@ def encryption_menu():
             # TODO: encrypt text with Vigenère cipher.
             return "Encrypted Text"
         if cipher_choice == 3:
-            # TODO: encrypt text with Date-shift cipher.
-            return "Encrypted Text"
+            date_shift_url = "http://127.0.0.1:5001"
+            encrypt_string = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. "
+                                   f"Non-letter characters will will remain the same. WARNING:"
+                                   f" once you hit enter, you will not be able to change your text.\n")
+            date_input = input("Please enter a date in the form MM/DD/YYYY. WARNING: once you hit enter, you will not be"
+                               " able to change your text.\n")
+            cipher_data = {"string_to_encrypt": encrypt_string,
+                           "encrypt_key": date_input}
+            json_data = json.dumps(cipher_data)
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(date_shift_url, data=json_data, headers=headers)
+            json_response = response.json()
+            date_shift_encrypted_text = json_response["encrypted_string"]
+            return date_shift_encrypted_text
 
 
 print("Hello fellow cryptologist! Welcome to...\n")

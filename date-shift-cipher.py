@@ -10,8 +10,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-PORT = 5000
-CONVERSION_RATE = 10.0
+PORT = 5001
 
 
 @app.route('/', methods=['POST'])
@@ -21,48 +20,44 @@ def date_shift_cipher():
     if not data:
         return jsonify({"error": "Data not found, please try again."}), 400
 
-    if "encryption_string" not in data:
-        return jsonify({"error": "encryption_string not found, please try again."}), 400
+    if "string_to_encrypt" not in data:
+        return jsonify({"error": "string_to_encrypt not found, please try again."}), 400
+
+    if "encrypt_key" not in data:
+        return jsonify({"error": "encrypt_key not found, please try again."}), 400
 
     try:
-        encrypt_string = data["encryption_string"]
+        encrypt_string = data["string_to_encrypt"]
+        date_input = data["encrypt_key"]
     except (ValueError, TypeError):
         return jsonify({"error": "incorrect data type for time_in_minutes, please try again."}), 400
 
-    xp = time * CONVERSION_RATE
-    return jsonify({"xp_gained": xp}), 200
+    letter_string_lower = "abcdefghijklmnopqrstuvwxyz"
+    letter_string_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    key_string_pos = 0
+    final_string = ""
+    key_string = ""
+
+    for char in date_input:
+        if char.isdigit():
+            key_string += char
+
+    for letter in encrypt_string:
+        if letter.islower():
+            current_letter_pos = letter_string_lower.rfind(letter)
+            shift_amount = int(key_string[key_string_pos])
+            key_string_pos = (key_string_pos + 1) % len(key_string)
+            final_string += letter_string_lower[(current_letter_pos + shift_amount) % 26]
+        elif letter.isupper():
+            current_letter_pos = letter_string_upper.rfind(letter)
+            shift_amount = int(key_string[key_string_pos])
+            key_string_pos = (key_string_pos + 1) % len(key_string)
+            final_string += letter_string_upper[(current_letter_pos + shift_amount) % 26]
+        else:
+            final_string += letter
+
+    return jsonify({"encrypted_string": final_string}), 200
 
 
 if __name__ == "__main__":
     app.run(port=PORT)
-
-
-letter_string_lower = "abcdefghijklmnopqrstuvwxyz"
-letter_string_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-key_string_pos = 0
-final_string = ""
-
-date_input = input("Please enter a date in the form MM/DD/YYYY.\n")
-key_string = ""
-
-for char in date_input:
-    if char.isdigit():
-        key_string += char
-
-encrypt_string = input("Please enter a string to be encrypted. Non-letter characters will will remain the same.\n")
-
-for letter in encrypt_string:
-    if letter.islower():
-        current_letter_pos = letter_string_lower.rfind(letter)
-        shift_amount = int(key_string[key_string_pos])
-        key_string_pos = (key_string_pos + 1) % len(key_string)
-        final_string += letter_string_lower[(current_letter_pos + shift_amount) % 26]
-    elif letter.isupper():
-        current_letter_pos = letter_string_upper.rfind(letter)
-        shift_amount = int(key_string[key_string_pos])
-        key_string_pos = (key_string_pos + 1) % len(key_string)
-        final_string += letter_string_upper[(current_letter_pos + shift_amount) % 26]
-    else:
-        final_string += letter
-
-print(final_string)
