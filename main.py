@@ -1,6 +1,8 @@
 from random import choice
 import requests
 import json
+import os
+import subprocess
 
 LOGO_1 = "   _____                          _______       __\n"
 LOGO_2 = "  / ___/__  ______  ___  _____   / ____(_)___  / /_  ___  _____\n"
@@ -29,7 +31,6 @@ def get_user_name():
     name = ""
     is_user_name_unconfirmed = True
     while is_user_name_unconfirmed:
-        # TODO: ADD ERROR CHECKING FOR ENTRY
         name = input(
             "First, please type your first name and hit enter. Don't worry! We'll keep your name private! "
             "Otherwise, type 'nickname' and we'll give you an alias to go by.\n")
@@ -40,7 +41,6 @@ def get_user_name():
             input(f"Next, please type 1 followed by enter if {name} is the name you'd like to go "
                   f"by, otherwise, type 2 followed by enter if you'd like to enter your name again or "
                   f"receive a different alias.\n"))
-        # TODO: ADD ERROR CHECKING FOR ENTRY
         if name_confirmation == 1:
             is_user_name_unconfirmed = False
     return name
@@ -72,8 +72,18 @@ def encryption_menu():
                                   f"2 - Vigenère cipher\n"
                                   f"3 - Date-shift cipher\n"))
         if cipher_choice == 0:
-            # TODO: encrypt text with Caesar cipher.
-            return "Encrypted Text"
+            path_directory_name = os.path.dirname(__file__)
+            file_path = os.path.join(path_directory_name, "cipher-data.txt")
+            data = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. Alphanumeric "
+                         f"characters ONLY, and NO whitespace. WARNING: once you hit enter, you will not be able to "
+                         f"change your text.\n")
+            with open(file_path, "w") as cipher_data:
+                cipher_data.write(data)
+
+            subprocess.run(["python", "caesar-cipher.py"])
+
+            with open(file_path, "r") as cipher_output:
+                return cipher_output.read()
         if cipher_choice == 1:
             opposite_url = "http://127.0.0.1:5000"
             encrypt_string = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. "
