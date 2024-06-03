@@ -1,4 +1,6 @@
 from random import choice
+import requests
+import json
 
 LOGO_1 = "   _____                          _______       __\n"
 LOGO_2 = "  / ___/__  ______  ___  _____   / ____(_)___  / /_  ___  _____\n"
@@ -54,9 +56,8 @@ def main_menu():
         elif user_choice == 2:
             print(f"{user_name}, {WHAT_IS_A_CIPHER_TEXT}")
         elif user_choice == 3:
-            txt_to_encrypt = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. WARNING:"
-                                   f" once you hit enter, you will not be able to change your text.\n")
-            return txt_to_encrypt
+            ready_to_encrypt = True
+            return ready_to_encrypt
         elif user_choice == 4:
             return False
         user_choice = int(input(f"{user_name}, {USER_CHOICE_MESSAGE}"))
@@ -74,7 +75,17 @@ def encryption_menu():
             return "Encrypted Text"
         if cipher_choice == 1:
             # TODO: encrypt text with Opposite cipher.
-            return "Encrypted Text"
+            opposite_url = "http://127.0.0.1:5000"
+            encrypt_string = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. "
+                                   f"Non-alphanumeric characters will remain the same. WARNING:"
+                                   f" once you hit enter, you will not be able to change your text.\n")
+            cipher_data = {"string_to_encrypt": encrypt_string}
+            json_data = json.dumps(cipher_data)
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(opposite_url, data=json_data, headers=headers)
+            json_response = response.json()
+            opposite_encrypted_text = json_response["encrypted_string"]
+            return opposite_encrypted_text
         if cipher_choice == 2:
             # TODO: encrypt text with Vigenère cipher.
             return "Encrypted Text"

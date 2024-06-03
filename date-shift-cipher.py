@@ -6,6 +6,37 @@ becomes "q," etc. The key is repeated to match the number of letters in the stri
 key would become 013119850131198 to match the 15 characters being converted in "Bananas are great."
 """
 
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+PORT = 5000
+CONVERSION_RATE = 10.0
+
+
+@app.route('/', methods=['POST'])
+def date_shift_cipher():
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"error": "Data not found, please try again."}), 400
+
+    if "encryption_string" not in data:
+        return jsonify({"error": "encryption_string not found, please try again."}), 400
+
+    try:
+        encrypt_string = data["encryption_string"]
+    except (ValueError, TypeError):
+        return jsonify({"error": "incorrect data type for time_in_minutes, please try again."}), 400
+
+    xp = time * CONVERSION_RATE
+    return jsonify({"xp_gained": xp}), 200
+
+
+if __name__ == "__main__":
+    app.run(port=PORT)
+
+
 letter_string_lower = "abcdefghijklmnopqrstuvwxyz"
 letter_string_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 key_string_pos = 0
