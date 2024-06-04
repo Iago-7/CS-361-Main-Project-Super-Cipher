@@ -94,10 +94,7 @@ def encryption_menu():
             with open(file_path, "w") as cipher_data:
                 cipher_data.write(data)
 
-            subprocess.run(["python", "caesar-cipher.py"])
-
-            # with open(file_path, "r") as cipher_output:
-            #     return cipher_output.read()
+            subprocess.run(["python3", "caesar-cipher.py"])
             return None
         if cipher_choice == 1:
             opposite_url = "http://127.0.0.1:5000"
