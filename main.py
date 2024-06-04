@@ -96,8 +96,9 @@ def encryption_menu():
 
             subprocess.run(["python", "caesar-cipher.py"])
 
-            with open(file_path, "r") as cipher_output:
-                return cipher_output.read()
+            # with open(file_path, "r") as cipher_output:
+            #     return cipher_output.read()
+            return None
         if cipher_choice == 1:
             opposite_url = "http://127.0.0.1:5000"
             encrypt_string = input(f"{user_name}, please type up to 1,000 characters of text to be encrypted. "
@@ -154,7 +155,8 @@ while True:
         break
     else:
         encrypted_text = encryption_menu()
-        print(f"{user_name}, here is your encrypted text: {encrypted_text}\n")
+        if encrypted_text is not None:
+            print(f"{user_name}, here is your encrypted text: {encrypted_text}\n")
     continue_or_exit_choice = int(input(f"{user_name}, type 1 and hit enter to return to the main menu, or type 2 and "
                                         f"hit enter to exit.\n"))
     if continue_or_exit_choice == 2:
