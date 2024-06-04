@@ -48,7 +48,14 @@ def get_user_name():
 
 def main_menu():
     # TODO: ADD TRY/CATCH HERE FOR NON-NUMERICAL INPUT
-    user_choice = int(input(f"{user_name}, {USER_CHOICE_MESSAGE}"))
+    valid_entry = False
+    user_choice = None
+    while valid_entry is False:
+        try:
+            user_choice = int(input(f"{user_name}, {USER_CHOICE_MESSAGE}"))
+            valid_entry = True
+        except (ValueError, TypeError):
+            print("Incorrect input, please enter a number between 0 and 4.\n")
     while True:
         if user_choice == 0:
             print(f"Great question {user_name}! {WHAT_IS_SUPER_CIPHER}")
@@ -66,11 +73,18 @@ def main_menu():
 
 def encryption_menu():
     while True:
-        cipher_choice = int(input(f"{user_name}, please choose from the following options:\n"
-                                  f"0 - Caesar cipher\n"
-                                  f"1 - Opposite cipher\n"
-                                  f"2 - Vigenère cipher\n"
-                                  f"3 - Date-shift cipher\n"))
+        valid_entry = False
+        cipher_choice = None
+        while valid_entry is False:
+            try:
+                cipher_choice = int(input(f"{user_name}, please choose from the following options:\n"
+                                          f"0 - Caesar cipher\n"
+                                          f"1 - Opposite cipher\n"
+                                          f"2 - Vigenère cipher\n"
+                                          f"3 - Date-shift cipher\n"))
+                valid_entry = True
+            except (ValueError, TypeError):
+                print("Incorrect input, please enter a number between 0 and 3.\n")
         if cipher_choice == 0:
             path_directory_name = os.path.dirname(__file__)
             file_path = os.path.join(path_directory_name, "cipher-data.txt")
