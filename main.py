@@ -47,7 +47,6 @@ def get_user_name():
 
 
 def main_menu():
-    # TODO: ADD TRY/CATCH HERE FOR NON-NUMERICAL INPUT
     valid_entry = False
     user_choice = None
     while valid_entry is False:
